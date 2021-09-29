@@ -73,12 +73,10 @@ class FeedViewModel: ObservableObject {
             
         case .ascending:
             
-//            launches = launches.sorted(by: {  })
             break
             
         case .descending:
             
-//            launches = launches.sorted(by: { true })
             break
         }
     }

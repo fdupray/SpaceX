@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct FeedView: View {
     
@@ -60,6 +61,11 @@ struct LaunchesTable: View {
     @Binding var companyInfo: CompanyInfo?
     @Binding var launches: [Launch]
     
+    @State var links: Links? = .none
+    @State var urlString: String = ""
+    @State var isPresentingActions: Bool = false
+    @State var isPresentingSafari: Bool = false
+    
     var body: some View {
         
         ScrollView(.vertical) {
@@ -75,11 +81,49 @@ struct LaunchesTable: View {
                 
                 ForEach (0..<launches.count) { i in
                     
-                    FeedCellView(viewModel: FeedCellViewModel(launch: launches[i]))
+                    let launch = launches[i]
+                    
+                    FeedCellView(viewModel: FeedCellViewModel(launch: launch))
                         .padding()
+                        .onTapGesture {
+                            
+                            if launch.links != nil {
+
+                                self.links = launch.links
+                                self.isPresentingActions = true
+                            }
+                        }
                 }
             }
         }
+        .sheet(isPresented: $isPresentingSafari, onDismiss: nil, content: {
+            SafariView(urlString: urlString)
+        })
+        .confirmationDialog("Links", isPresented: $isPresentingActions) {
+            
+            if let article = links?.article {
+                Button("Article") {
+                    presentSafariWithURL(article)
+                }
+            }
+            
+            if let wiki = links?.wikipedia {
+                Button("Wikipedia") {
+                    presentSafariWithURL(wiki)
+                }
+            }
+            
+            if let youtube = links?.youtube_id {
+                Button("Youtube") {
+                    presentSafariWithURL("http://youtu.be/\(youtube)")
+                }
+            }
+        }
+    }
+    
+    func presentSafariWithURL(_ urlString: String) {
+        self.urlString = urlString
+        isPresentingSafari = true
     }
 }
 
@@ -96,6 +140,19 @@ struct NoLaunchesView: View {
                 .spaceXFont(.body)
                 .padding()
         }
+    }
+}
+
+struct SafariView: UIViewControllerRepresentable {
+
+    let urlString: String
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
+        let url = URL(string: urlString)!
+        return SFSafariViewController(url: url)
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {
     }
 }
 
