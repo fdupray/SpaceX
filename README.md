@@ -1,5 +1,7 @@
 # SpaceX
 
+## I have 2 dev accounts, which are somehow both linked to the same Github account. Just want to make sure there is no misunderstanding! 
+
 ## Architecture
 
 I decided to use an MVVM approach. In my case, you'll notice I also created a testable router to handle the navigation. 
