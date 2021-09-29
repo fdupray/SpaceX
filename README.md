@@ -4,7 +4,7 @@
 
 ## Architecture
 
-I decided to use an MVVM approach. In my case, you'll notice I also created a testable router to handle the navigation. 
+I decided to use an MVVM approach: every view is accompanied by a view model. The view model handles core logic, whereas the view only displays data and generates events (managed by vm or router). You'll notice I also created a testable router to handle the navigation. 
 My approach is protocol-oriented, as I want to avoid injecting direct implementations as dependencies (thus affecting testability).
 
 ## What you'll find 
