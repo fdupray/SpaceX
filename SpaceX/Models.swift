@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CompanyInfo: Decodable {
     
@@ -26,14 +27,11 @@ struct Launch: Decodable {
     let name: String
     let rocket: String
     let date_local: String
+    let success: Bool?
     let links: Links?
     
     var formattedDateString: String {
         ""
-    }
-    
-    var date: Date {
-        Date()
     }
 
     var formattedDaysString: String {
@@ -51,6 +49,9 @@ struct Rocket: Decodable {
 
 struct Links: Decodable {
     let patch: Patch?
+    let youtube_id: String?
+    let wikipedia: String?
+    let article: String?
 }
 
 struct Patch: Decodable {

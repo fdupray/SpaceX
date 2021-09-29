@@ -29,7 +29,7 @@ extension SpaceXDataManager: DataFetching {
     
     func fetchLaunches(success: @escaping LaunchResultHandler, failure: @escaping ErrorHandler) {
                         
-        var urlComp = URLComponents(string: "https://api.spacexdata.com/v5/launches")
+        let urlComp = URLComponents(string: "https://api.spacexdata.com/v4/launches")
         
         guard let url = urlComp?.url else { return }
                 

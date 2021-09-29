@@ -35,16 +35,12 @@ struct PopoverView: View {
     
     var body: some View {
         
-        VStack {
-            
-            Spacer()
-            
+        VStack (spacing: 16) {
+                        
             OptionButton(title: "Ascending") {
                 viewModel.selectedFilter(filter: .descending)
             }
-            
-            Divider()
-            
+                        
             OptionButton(title: "Descending") {
                 viewModel.selectedFilter(filter: .descending)
             }
@@ -60,7 +56,7 @@ private struct OptionButton: View {
     var body: some View {
         
         Button(title, action: action)
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 100, alignment: .center)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50, alignment: .center)
     }
 }
 

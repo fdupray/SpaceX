@@ -17,6 +17,13 @@ struct FeedCellView: View {
     var viewModel: FeedCellViewModel
     
     @State var isExpanded: Bool = false
+    
+    var hasLinks: Bool {
+        let links = viewModel.launch.links
+        return links?.article != nil
+        || links?.youtube_id != nil
+        || links?.wikipedia != nil
+    }
         
     var body: some View {
         
@@ -64,6 +71,28 @@ struct FeedCellView: View {
             }
             
             Spacer()
+            
+            if let success = viewModel.launch.success {
+                
+                Text(success ? "✅" : "❌")
+                    .font(.system(size: 25))
+                    .padding()
+            }
+            
+            else {
+                
+                Text("Not\nlaunched")
+                    .spaceXFont(.subtitle)
+                    .padding()
+            }
+            
+            if hasLinks {
+                
+                Text(">")
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+                    .padding()
+            }
         }
     }
 }
@@ -88,6 +117,6 @@ private struct CellRowView: View {
 
 struct FeedCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedCellView(viewModel: FeedCellViewModel(launch: Launch(id: "", name: "Rocket 1", rocket: "Rock-et", date_local: "Some time", links: Links(patch: Patch(small: "")))))
+        FeedCellView(viewModel: FeedCellViewModel(launch: Launch(id: "", name: "Rocket 1", rocket: "Rock-et", date_local: "Some time", success: true, links: nil)))
     }
 }
